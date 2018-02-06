@@ -13,13 +13,54 @@ const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 
+var app = express();
+
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
+let Mood = require('./models/moods-model');
+
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://reeversedev:1234@ds119268.mlab.com:19268/mongochat').then(() => console.log('Connected to Database')).catch((err) => console.log(err));
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+
 
 app.use(cors());
+
+io.on('connection', (socket) => {
+  console.log('User Connected');
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+
+  socket.on('mood', (moodText) => {
+    console.log('Mood Received: ' + moodText);
+
+    let date = new Date().toLocaleDateString();
+
+    let mood = new Mood({
+      text: moodText,
+      updated_at: date
+    });
+
+    mood.save((err, result) => {
+      console.log('Result: ' + result);
+      Mood.find((err, response) => {
+        console.log('Response: ' + response);
+        io.emit('mood', {
+          type: 'new-mood',
+          text: response
+        });
+      });
+    });
+  });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,6 +96,10 @@ app.use('/', index);
 app.use('/auth', authRoutes);
 app.use('/users', users);
 app.use('/profile', profile);
+
+http.listen(3000, () => {
+  console.log('Started on port 3000');
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

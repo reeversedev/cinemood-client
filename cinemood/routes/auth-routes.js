@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+require('../config/passport-setup')(passport);
+
+const jwt = require('jsonwebtoken');
 const User = require('../models/user-model');
 const config = require('../config/keys');
-const jwt = require('jsonwebtoken');
 
 router.post('/signup', (req, res) => {
     let newUser = new User({
@@ -27,7 +29,7 @@ router.post('/signup', (req, res) => {
     })
 });
 
-router.post('/authenticate', function (req, res, next) {
+router.post('/signin', function (req, res, next) {
     require('../config/passport-setup')(passport);
 
     var username = req.body.username;
