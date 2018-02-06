@@ -1,0 +1,17 @@
+<div class="form-group">
+  <button (click)="sendMood()" class="btn btn-default">Send Mood</button>
+</div>
+<div class="form-group">
+  <input type="text" class="form-control" placeholder="Mood Title">
+</div>
+<div class="form-group">
+  <textarea type="text" [(ngModel)]='text' class="form-control" placeholder="Mood Description"></textarea>
+</div>
+
+<ul *ngFor="let m of mood">
+  <li>
+    <h3>{{m.text}}</h3>
+    <span>{{m.updated_at}}</span> |
+    <span>{{m._id}}</span>
+  </li>
+</ul>

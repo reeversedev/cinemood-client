@@ -1,0 +1,24 @@
+<div class="container">
+  <div style="margin-top:40px;">
+    <h1 class="text-center">Signup</h1>
+  </div>
+  <div>
+    <form (submit)="onRegisterSubmit()">
+      <div class="form-group">
+        <input type="text" placeholder="Enter your name" name="name" id="name" [(ngModel)]="name" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Enter your email" name="email" id="email" [(ngModel)]="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Enter your username" name="username" id="username" [(ngModel)]="username" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Enter your password" name="password" id="password" [(ngModel)]="password" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Signup" class="btn btn-default">
+      </div>
+    </form>
+  </div>
+</div>

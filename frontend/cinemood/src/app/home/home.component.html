@@ -1,0 +1,18 @@
+<div class="container">
+  <div>
+    <div class="row">
+      <div *ngFor="let item of results">
+        <div class="card">
+          <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{item.backdrop_path}}" alt="Card image" style="width:100%">
+          <div class="card-body">
+            <a class="card-title" [routerLink]="['/tv-info', item.id]">
+              <b>{{item.name}}</b>
+            </a>
+            <p class="card-text text-truncate">{{item.overview}}</p>
+            <a href="#" class="btn btn-primary col-md-12 text-center">I am watching</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
