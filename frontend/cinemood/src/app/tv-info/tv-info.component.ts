@@ -20,24 +20,26 @@ export class TvInfoComponent implements OnInit {
   moods;
   connection;
   comments = [];
-
+  year: String;
+  mediaId: String;
   constructor(
     private movieDbService: MoviedbService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService
-  ) {}
+  ) { }
 
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params: Params) => {
       const itemId = params.id;
+      this.mediaId = params.id;
       // this.movieDbService.getMood().subscribe(resultMood => {
       //   this.comments.push(resultMood);
       // });
       this.movieDbService.infoTv(itemId).subscribe(data => {
         if (data) {
+          this.year = data.first_air_date.split('-')[0];
           this.results = data;
-          // console.log(this.results);
         }
       });
     });

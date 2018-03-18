@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-signin',
@@ -11,7 +12,12 @@ export class SigninComponent implements OnInit {
 
   username: String;
   password: String;
-  constructor(private authService: AuthService, private router: Router) { }
+  action: any = 'Okay';
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
   }
@@ -25,9 +31,17 @@ export class SigninComponent implements OnInit {
       if (data.success) {
         this.authService.storeUserData(data.token, data.user);
         this.router.navigate(['profile']);
+        this.openSnackBar(data.msg + data.user.name, this.action);
       } else {
+        console.log(data);
+        this.openSnackBar(data.msg, this.action);
         this.router.navigate(['signin']);
       }
+    });
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000
     });
   }
 }

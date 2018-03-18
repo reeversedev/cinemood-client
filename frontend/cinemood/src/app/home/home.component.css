@@ -1,5 +1,77 @@
+/* .brick {
+  width: 350px;
+} */
+
 .card {
-  height: 250px;
-  width: 200px;
+  max-width: 400px;
   margin: 10px;
+}
+
+.card-header-image {
+  background-size: cover;
+}
+.btn-floating {
+  background-color: white!important;
+}
+
+.before-favorite {
+  color: red;
+}
+.after-favorite {
+  color: white;
+}
+
+.after-fav-floating {
+  background-color: red!important;
+}
+
+mat-card-title a {
+  color: whitesmoke;
+}
+
+mat-card-subtitle.btn-floating {
+  background-color: yellow!important;
+  color: black;
+}
+
+mat-card-subtitle.btn-floating span {
+  margin-left: 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.example-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 50px;
+}
+
+li{
+  font-size: 20px;
+  text-align: center;
+}
+
+#name {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#gender {
+  text-transform: capitalize;
+}
+#sidenavprofilepicture {
+  margin-left: 50px;
+  height: 160px;
+  width: 160px;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MoodService } from '../services/mood.service';
 
 @Component({
@@ -8,9 +8,12 @@ import { MoodService } from '../services/mood.service';
 })
 export class MoodsComponent implements OnInit {
 
-  text: String;
-  mood: String;
-  time: Number;
+  @Input() mediaId: String;
+
+  description: String;
+  mood: any;
+  time: any;
+  title: String;
 
   constructor(private moodService: MoodService) { }
 
@@ -20,8 +23,20 @@ export class MoodsComponent implements OnInit {
       this.mood = moods.text;
       this.time = moods.time;
     });
+    this.moodService.getMood(this.mediaId).subscribe(moods => this.mood = moods);
+    console.log(typeof(this.mood));
   }
   sendMood() {
-    this.moodService.sendMood(this.text);
+    // this.moodService.sendMood(this.text);
+  }
+  postMood() {
+    this.time = Date.now();
+    const mood = {
+      mediaID: this.mediaId,
+      title: this.title,
+      description: this.description,
+      time: this.time
+    };
+    this.moodService.postMood(mood);
   }
 }

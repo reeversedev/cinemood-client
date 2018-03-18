@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div>
     <div class="row">
       <div *ngFor="let item of results">
@@ -16,3 +16,82 @@
     </div>
   </div>
 </div>
+<!-- <div class="container">
+  <masonry>
+    <masonry-brick class="brick" *ngFor="let brick of results">
+      <div class="card">
+        <img class="card-img-top" src="https://image.tmdb.org/t/p/w500{{brick.backdrop_path}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{brick.original_name}}</h5>
+          <p class="card-text">{{brick.overview}}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </masonry-brick>
+  </masonry>
+</div> -->
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #sidenav class="example-sidenav" mode="open">
+    <div *ngIf="user">
+    <ul>
+      <img src="{{user.profilePicture}}" alt="" id="sidenavprofilepicture">
+      <li class="text-center" id="name">{{user.name}}</li>
+      <li><a>{{user.username}}</a></li>
+      <li>{{user.email}}</li>
+      <li id="gender">{{user.gender}}</li>
+      <li>
+        <div *ngIf="user">
+          <button mat-button (click)="onLogout()" *ngIf="authService.loggedIn()">Logout</button>
+      </div>
+      </li>
+    </ul>
+    </div>
+
+    <!-- <button (click)="showFiller = !showFiller" mat-raised-button>
+        Toggle extra text
+      </button> -->
+  </mat-drawer>
+
+  <!-- <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Toggle sidenav
+      </button>
+    </div> -->
+
+  <div class="container">
+    <mat-grid-list cols="4" rowHeight='370px'>
+      <div *ngFor='let result of results'>
+        <mat-grid-tile>
+          <mat-card class="card">
+            <mat-card-header>
+              <mat-card-title>
+                <a [routerLink]="['/tv-info', result.id]">{{result.original_name}}</a>
+              </mat-card-title>
+              <mat-card-subtitle class="btn-floating">
+                <span>
+                  {{result.vote_average}}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://image.tmdb.org/t/p/w500_and_h282_bestv2{{result.backdrop_path}}" alt="{{result.original_name}}">
+            <mat-card-content>
+              <!-- <p>
+                    {{result.overview}}
+                  </p> -->
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button class="btn btn-primary">Moods</button>
+              <a class="btn-floating before-fav-floating right" (click)="myFavorite(result.id)" *ngIf="count < 1">
+                <i class="large material-icons before-favorite">favorite_border</i>
+              </a>
+              <a class="btn-floating after-fav-floating right" (click)="myFavorite()" *ngIf="count >= 1">
+                <i class="large material-icons after-favorite">favorite_border</i>
+              </a>
+            </mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+      </div>
+    </mat-grid-list>
+  </div>
+</mat-drawer-container>

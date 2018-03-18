@@ -1,25 +1,33 @@
+<!-- <div class="background">
+  <img *ngIf="results.backdrop_path" src="https://image.tmdb.org/t/p/w1000_and_h563_bestv2{{results.backdrop_path}}" class="backdrop-image">
+</div>
 <div class="container frame">
   <div class="row">
-    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-      <img *ngIf="results.poster_path" src="https://image.tmdb.org/t/p/w500/{{results.poster_path}}" height="450" width="350" class="img-responsive">
+    <div class="col m4">
+      <img *ngIf="results.poster_path" src="https://image.tmdb.org/t/p/original/{{results.poster_path}}" height="200" width="150"
+        class=" poster-image">
     </div>
-    <div class="col-lg-4">
-      <!-- Rankings and Average -->
-      Total Votes: {{results.vote_average}}
-    </div>
-    <div class="col-lg-4">
-      <!-- Season and Episodes -->
-      <div class="row">
+    <div class="col m8">
+      <h3 class="text-center">{{results.original_name}}</h3>
+    </div> -->
+
+<!-- <div class="col-lg-4"> -->
+<!-- Rankings and Average -->
+<!-- Total Votes: {{results.vote_average}}
+    </div> -->
+<!-- <div class="col-lg-4"> -->
+<!-- Season and Episodes -->
+<!-- <div class="row">
         Total Episodes: {{results.number_of_episodes}}
       </div>
       <div class="row">
         Total Seasons: {{results.number_of_seasons}}
       </div>
-    </div>
-  </div>
-  <div class="row">
+    </div> -->
+<!-- </div> -->
+<!-- <div class="row">
     <div class="col-lg-4 col-md-6">
-      <h3 class="text-center">{{results.original_name}}</h3>
+
       <span id="last-air" *ngIf="results.last_air_date">Last Aired: {{results.last_air_date}}</span>
     </div>
     <div class="col-lg-12">
@@ -27,15 +35,38 @@
         {{results.overview}}
       </p>
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+<!-- <div class="row">
     <div class="col-lg-3 col-md-6">
       <h2 class="text-left">Moods:</h2>
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+<!-- <div class="row">
     <div class="col-lg-12 col-md-6">
       <app-moods></app-moods>
     </div>
+  </div> -->
+<!-- </div> -->
+
+<div class="background">
+  <div id="backdrop-image-div">
+    <img *ngIf="results.backdrop_path" src="https://image.tmdb.org/t/p/w1000_and_h563_bestv2{{results.backdrop_path}}" class="backdrop-image shadow">
   </div>
+  <div class="over-div container">
+    <div class="inside-over-div">
+      <div class="row">
+        <div class="col m4">
+          <img *ngIf="results.poster_path" src="https://image.tmdb.org/t/p/original/{{results.poster_path}}" height="200" width="150"
+            class=" poster-image">
+        </div>
+        <div class="col m8">
+          <h3 class="text-center white-text" id="title">{{results.original_name}}</h3>
+          <h5 class="text-center white-text">({{year}})</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <app-moods [mediaId]="mediaId"></app-moods>
 </div>

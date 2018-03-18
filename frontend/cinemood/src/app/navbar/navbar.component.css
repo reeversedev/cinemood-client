@@ -48,3 +48,34 @@
 .loginBtn--google:focus {
   background: #E74B37;
 }
+button.brand {
+  text-transform: uppercase;
+  font-size: 25px;
+}
+nav {
+  background-color: rgb(49, 34, 34);
+}
+.profile {
+  height: 40px;
+  width: 35px;
+  margin-top: 10px;
+}
+.row .col.m6 {
+  width: auto;
+}
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
