@@ -79,15 +79,16 @@
               <!-- <p>
                     {{result.overview}}
                   </p> -->
+                  <span>{{result.vote_count}}</span>
             </mat-card-content>
             <mat-card-actions>
               <button mat-button class="btn btn-primary">Moods</button>
-              <a class="btn-floating before-fav-floating right" (click)="myFavorite(result.id)" *ngIf="count < 1">
+              <a class="btn-floating before-fav-floating right" (click)="vote(result.id)">
                 <i class="large material-icons before-favorite">favorite_border</i>
               </a>
-              <a class="btn-floating after-fav-floating right" (click)="myFavorite()" *ngIf="count >= 1">
+              <!-- <a class="btn-floating after-fav-floating right" (click)="myFavorite()" *ngIf="count >= 1">
                 <i class="large material-icons after-favorite">favorite_border</i>
-              </a>
+              </a> -->
             </mat-card-actions>
           </mat-card>
         </mat-grid-tile>

@@ -1,18 +1,26 @@
 <div class="container">
-  <div style="margin-top:40px;">
-    <h1 class="text-center">Sign In</h1>
-  </div>
-  <div>
-    <form (submit)="onSignIn()">
-      <div class="form-group">
-        <input type="text" class="form-control mr-sm-2" placeholder="Username" name="username" id="username" [(ngModel)]="username">
+  <div class="row">
+    <div class="col m6">
+      <div>
+        <h1 class="text-center">Sign In</h1>
+        <p><i>If you are a returning User</i></p>
       </div>
-      <div class="form-group">
-        <input type="password" class="form-control mr-sm-2" placeholder="Password" name="password" id="password" [(ngModel)]="password">
+      <div>
+        <form (submit)="onSignIn()">
+          <div class="form-group">
+            <input type="text" class="form-control mr-sm-2" placeholder="Username" name="username" id="username" [(ngModel)]="username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control mr-sm-2" placeholder="Password" name="password" id="password" [(ngModel)]="password">
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Signin" class="btn btn-default">
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <input type="submit" value="Signin" class="btn btn-default">
-      </div>
-    </form>
+    </div>
+    <div class="col m6">
+      <app-signup></app-signup>
+    </div>
   </div>
 </div>

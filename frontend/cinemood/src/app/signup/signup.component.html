@@ -1,6 +1,7 @@
 <div class="container">
-  <div style="margin-top:40px;">
+  <div>
     <h1 class="text-center">Signup</h1>
+    <span><i>If you are a new User</i></span>
   </div>
   <div>
     <form (submit)="onRegisterSubmit()">
@@ -13,23 +14,24 @@
           <input type="file" (change)="uploadImage($event)">
         </div>
         <div class="file-path-wrapper">
-          <input class="file-path validate" type="text" [(ngModel)]= "filename" name="filename">
+          <input class="file-path validate" type="text" [(ngModel)]="filename" name="filename">
         </div>
         <div class="form-group">
-          <span>{{progress}} Uploaded</span>
+          <span *ngIf="progress">{{progress}} Uploaded</span>
         </div>
       </div>
-      <div class="form-group">
+      <div>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="dob" name="dob" (change)="onChange()">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-
-          <mat-radio-group [(ngModel)]="gender" name="gender">
-            <mat-radio-button value="male">Male</mat-radio-button>
-            <mat-radio-button value="female">Female</mat-radio-button>
-          </mat-radio-group>
         </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-radio-group [(ngModel)]="gender" name="gender">
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
       </div>
 
       <div class="form-group">

@@ -11,5 +11,6 @@ module.exports = {
     session: {
         cookieKey: 'reeversedevisoneofhiskind'
     },
-    secret: 'verysecretysecretkey'
+    secret: 'verysecretysecretkey',
+    movieDb: '93fc3e24fc19362e1d839b8ea32d2d7f'
 };

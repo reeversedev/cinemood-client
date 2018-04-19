@@ -2,16 +2,25 @@
   <button (click)="postMood()" class="btn btn-default">Send Mood</button>
 </div>
 <div class="form-group">
-  <input type="text" class="form-control" placeholder="Mood Title" [(ngModel)]="title">
+  <input type="text" class="form-control" placeholder="Mood Title" [(ngModel)]="title" name="title">
 </div>
 <div class="form-group">
-  <textarea type="text" [(ngModel)]='description' class="form-control" placeholder="Mood Description"></textarea>
+  <textarea type="text" [(ngModel)]='description' class="form-control" placeholder="Mood Description" name="description"></textarea>
 </div>
 
 <ul *ngFor="let m of mood">
   <li>
-    <h3>{{m.title}}</h3>
-    <span>{{m.time | date: 'MM/dd/yyyy' }}</span>
-    <p>{{m.description}}</p>
+    <div>
+      <h5>{{m.title}}</h5>
+      <span *ngIf="m.user">by
+        <a [routerLink]="['/user', m.user.user.username]">
+          {{m.user.user.name}}
+        </a>
+      </span> on
+      <span>{{m.time | date: 'MM/dd/yyyy' }}</span>
+    </div>
+    <div>
+      <p>{{m.description}}</p>
+    </div>
   </li>
 </ul>

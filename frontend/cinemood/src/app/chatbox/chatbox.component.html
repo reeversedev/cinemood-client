@@ -1,0 +1,44 @@
+<mat-drawer #messagenav>
+  <div class="container">
+    <div id="messages">
+      <div *ngFor="let message of allMessages">
+        <div>
+          <div [ngClass]="[(message.senderUsername === user.user.username)? 'sent': 'received']">
+            <div class="row">
+              <div class="col m2">
+                <img src="{{message.senderProfilePicture}}" class="circle" height="40" width="40">
+              </div>
+              <div class="col m10">
+                <h6>
+                  {{message.senderName}}
+                </h6>
+                <p>
+                  {{message.message}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <footer>
+      <div class="col m12 row" ngx-auto-scroll lock-y-offset="10" observe-attributes>
+        <form class="message-form">
+          <div class="row">
+            <div class="col m10">
+              <input type="text" placeholder="Type your message here" [(ngModel)]="messageContent" name="messageContent">
+            </div>
+            <div class="col m2">
+              <input type="submit" value="Submit" class="btn" (click)="newMessage()">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </footer>
+
+  </div>
+
+</mat-drawer>

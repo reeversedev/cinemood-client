@@ -18,12 +18,17 @@ var app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let Mood = require('./models/moods-model');
+let tvShowDb = require('./models/tvshow-model');
+let Message = require('./models/message-model');
 
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://reeversedev:1234@ds119268.mlab.com:19268/mongochat').then(() => console.log('Connected to Database')).catch((err) => console.log(err));
-
+// mongoose.connect('mongodb://reeversedev:1234@ds119268.mlab.com:19268/mongochat').then(() => console.log('Connected to Database')).catch((err) => console.log(err));
+// connect to mongodb
+mongoose.connect(keys.mongodb.dbURI, () => {
+  console.log('Connected to MongoDB.');
+});
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -47,21 +52,69 @@ io.on('connection', (socket) => {
     let mood = new Mood({
       title: moodMatter.title,
       time: moodMatter.time,
-      description:moodMatter.description,
-      mediaId: moodMatter.mediaID
+      description: moodMatter.description,
+      mediaId: moodMatter.mediaID,
+      user: moodMatter.user
     });
 
     mood.save((err, result) => {
       console.log('Result: ' + result);
-      Mood.find({mediaId: moodMatter.mediaID},(err, response) => {
+      Mood.find({
+        mediaId: moodMatter.mediaID
+      }, (err, response) => {
         console.log('Response: ' + response);
         io.emit('mood', {
           type: 'new-mood',
           text: response
         });
-      }).sort({time: -1});
+      }).sort({
+        time: -1
+      });
     });
   });
+  socket.on('vote', (vote) => {
+    tvShowDb.update({
+      id: vote.mediaId
+    }, {
+      $inc: {
+        vote_count: 1
+      }
+    }, (err, res) => {
+      tvShowDb.find({
+        id: vote.mediaId
+      }, (err, media) => {
+        io.emit('vote', {
+          type: 'new-vote',
+          text: media
+        });
+      });
+    });
+  });
+  socket.on('new-message', (message) => {
+    console.log('from socket',message);
+    let newMessage = new Message({
+      message: message.message,
+      senderName: message.sender.user.name,
+      receiverName: message.receiver,
+      senderEmail: message.sender.user.email,
+      senderUsername: message.sender.user.username,
+      senderDob: message.sender.user.dob,
+      senderGender: message.sender.user.gender,
+      senderProfilePicture: message.sender.user.profilePicture
+    });
+    newMessage.save((err, result) => {
+      console.log('Saved Message', result);
+      Message.find({
+        _id: result._id
+      }, (err, response) => {
+        io.emit('message', {
+          type: 'new-message',
+          text: response
+        });
+      })
+    })
+
+  })
 });
 
 // view engine setup
@@ -77,11 +130,6 @@ app.use(cookieSession({
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-// connect to mongodb
-mongoose.connect(keys.mongodb.dbURI, () => {
-  console.log('Connected to MongoDB.');
-});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

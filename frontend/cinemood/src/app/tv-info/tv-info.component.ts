@@ -42,6 +42,7 @@ export class TvInfoComponent implements OnInit {
           this.results = data;
         }
       });
+      this.authService.getProfile().subscribe(profile => console.log(profile));
     });
     // this.connection = this.movieDbService.getMood().subscribe(comment => {
     //   this.moods = comment;

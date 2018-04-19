@@ -618,7 +618,7 @@ input.mat-input-element {
   border-radius: 50%;
   pointer-events: none;
   transition: opacity, transform 0s cubic-bezier(0, 0, .2, 1);
-  transform: scale(0)
+  transform: scale(0);
 }
 
 .cdk-visually-hidden {
@@ -2112,5 +2112,12 @@ input.mat-input-element {
 
 .mat-simple-snackbar-action:active {
   color: black;
-  background: white!important;
+  background: white !important;
+}
+
+button:focus {
+  background-color: transparent;
+}
+.btn:hover {
+  background-color: transparent;
 }

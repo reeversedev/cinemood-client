@@ -7,6 +7,7 @@ import { Http, Headers } from '@angular/http';
 export class MoodService {
 
   moods: Subject<any>;
+  votes: Subject<any>;
 
   constructor(private wsService: WebsocketService, private http: Http) {
     this.moods = <Subject<any>>wsService.connect().map((response: any): any => {
@@ -28,5 +29,10 @@ export class MoodService {
   }
   sendMood(mood) {
     this.moods.next(mood);
+  }
+  vote(mediaId) {
+    const headers = new Headers();
+   // headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/vote', mediaId).map(res => res.json());
   }
 }

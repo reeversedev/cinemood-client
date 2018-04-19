@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MoodService } from '../services/mood.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-moods',
@@ -14,8 +15,10 @@ export class MoodsComponent implements OnInit {
   mood: any;
   time: any;
   title: String;
+  user: Object;
+  votes: String;
 
-  constructor(private moodService: MoodService) { }
+  constructor(private moodService: MoodService, private authService: AuthService) { }
 
   ngOnInit() {
     this.moodService.moods.subscribe(moods => {
@@ -24,10 +27,12 @@ export class MoodsComponent implements OnInit {
       this.time = moods.time;
     });
     this.moodService.getMood(this.mediaId).subscribe(moods => this.mood = moods);
-    console.log(typeof(this.mood));
+    console.log(typeof (this.mood));
+    this.authService.getProfile().subscribe(user => this.user = user);
   }
-  sendMood() {
-    // this.moodService.sendMood(this.text);
+  clearInputs() {
+    this.title = '';
+    this.description = '';
   }
   postMood() {
     this.time = Date.now();
@@ -35,8 +40,11 @@ export class MoodsComponent implements OnInit {
       mediaID: this.mediaId,
       title: this.title,
       description: this.description,
-      time: this.time
+      time: this.time,
+      user: this.user,
+      votes: this.votes
     };
     this.moodService.postMood(mood);
+    this.clearInputs();
   }
 }

@@ -1,0 +1,17 @@
+#profilePicture {
+  margin-top: 40px;
+}
+#name {
+  margin: 1.46rem 0 0 0!important;
+}
+.margin-top {
+  margin-top: 10px;
+}
+mat-sidenav-container {
+  position: fixed;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+

@@ -60,8 +60,4 @@ export class NavbarComponent implements OnInit {
     this.navigationService.toggle();
   }
 
-
-  /* this.moviedbService.searchQuery(query).subscribe(data => {
-
- }) */
 }
