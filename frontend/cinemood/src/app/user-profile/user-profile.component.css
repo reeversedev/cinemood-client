@@ -7,6 +7,9 @@
 .margin-top {
   margin-top: 10px;
 }
+.mt-2 {
+  margin-top: 20px;
+}
 mat-sidenav-container {
   position: fixed;
   height: 100%;

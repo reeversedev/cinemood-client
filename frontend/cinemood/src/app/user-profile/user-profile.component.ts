@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { MatDrawer, MatSidenav } from '@angular/material';
 import { NavigationService } from '../services/navigation.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,11 +14,13 @@ export class UserProfileComponent implements OnInit {
 
   @ViewChild('messagenav') public messagenav: MatDrawer;
 
-  user = [];
+  user = {};
+  sender = {};
   constructor(
     private activatedRoute: ActivatedRoute,
     private profileService: ProfileService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -30,6 +33,10 @@ export class UserProfileComponent implements OnInit {
   openMessage() {
     console.log('this is message.');
     this.navigationService.messageToggle();
+  }
+  sendRequest() {
+    console.log(this.user['username']);
+    this.authService.getProfile().subscribe(self => console.log(this.sender = self));
   }
 
 }
