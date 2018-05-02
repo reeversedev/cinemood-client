@@ -12,6 +12,8 @@ const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const redis = require('redis');
+let client = redis.createClient();
 
 var app = express();
 
@@ -115,6 +117,17 @@ io.on('connection', (socket) => {
     })
 
   })
+  socket.on('mate-request', (request) => {
+    client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
+      if(err) {
+        console.log(err);
+      }
+      io.emit('mate-request', {
+        type: 'mate-request-sent',
+        text: reply
+      });
+    });
+  });
 });
 
 // view engine setup

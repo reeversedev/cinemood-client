@@ -4,6 +4,8 @@ import { ProfileService } from '../services/profile.service';
 import { MatDrawer, MatSidenav } from '@angular/material';
 import { NavigationService } from '../services/navigation.service';
 import { AuthService } from '../services/auth.service';
+import { WebsocketService } from '../services/websocket.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,14 +18,26 @@ export class UserProfileComponent implements OnInit {
 
   user = {};
   sender = {};
+  request: Subject<any>;
+  requestSent: Boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private profileService: ProfileService,
     private navigationService: NavigationService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private wsService: WebsocketService
+  ) {
+    this.request = <Subject<any>>wsService.mateRequest().map((response: any): any => {
+      return response;
+    });
+  }
 
   ngOnInit() {
+    this.wsService.mateRequest().subscribe(data => {
+      if (data['text'] === 0 || data['text'] === 1) {
+        this.requestSent = true;
+      }
+    });
     this.activatedRoute.params.subscribe((params: Params) => {
       this.profileService.getUser(params.username).subscribe(result => this.user = result);
     });
@@ -31,12 +45,26 @@ export class UserProfileComponent implements OnInit {
   }
 
   openMessage() {
-    console.log('this is message.');
     this.navigationService.messageToggle();
   }
-  sendRequest() {
-    console.log(this.user['username']);
-    this.authService.getProfile().subscribe(self => console.log(this.sender = self));
+  makeRequest() {
+    const mateRequest = {};
+    mateRequest['receiver'] = this.user['username'];
+    // this.authService.getProfile().subscribe(self => mateRequest['sender'] = self);
+    // this.request.next(mateRequest);
+    // this.authService.getProfile().subscribe(self => mateRequest['sender'] = self.user['username']);
+    this.authService.getProfile().subscribe(self => this.sendRequest(self.user['username'], mateRequest['receiver']));
   }
+  cancelRequest() {
+    console.log('This method is used for cancelling the request');
+  }
+  sendRequest(sender, receiver) {
+    const actors = {};
+    actors['sender'] = sender;
+    actors['receiver'] = receiver;
+    actors['relation'] = 'upcoming-friends';
+    this.request.next(actors);
+  }
+
 
 }

@@ -14,8 +14,11 @@
           <i class="fa fa-mars fa-2x" aria-hidden="true"></i>
         </b>
       </div>
-      <div class="col m2">
-        <button mat-raised-button class="mt-2" color=primary (click)="sendRequest()">Be friends</button>
+      <div class="col m2" *ngIf="requestSent">
+        <button mat-button class="mt-2" color=primary (click)="cancelRequest()">Friend Request sent</button>
+      </div>
+      <div class="col m2" *ngIf="!requestSent">
+        <button mat-raised-button class="mt-2" color=primary (click)="makeRequest()">Be friends</button>
       </div>
     </div>
   </div>

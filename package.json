@@ -27,6 +27,7 @@
     "passport-2fa-totp": "0.0.1",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^3.0.1",
+    "redis": "^2.8.0",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4"
   },

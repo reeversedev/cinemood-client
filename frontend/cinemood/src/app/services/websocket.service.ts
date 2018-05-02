@@ -55,7 +55,7 @@ export class WebsocketService {
     this.socket = io('http://localhost:3000');
     const messageObservable = new Observable(MessageObservable => {
       this.socket.on('message', (data) => {
-        console.log('New Message', data);
+        console.log('Received a new Friend Request', data);
         MessageObservable.next(data);
       });
       return () => {
@@ -74,6 +74,7 @@ export class WebsocketService {
     this.socket = io('http://localhost:3000');
     const requestObservable = new Observable(RequestObservable => {
       this.socket.on('mate-request', (data) => {
+        console.log(data);
         RequestObservable.next(data);
       });
       return () => {
