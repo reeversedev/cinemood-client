@@ -16,6 +16,10 @@ export class WebsocketService {
         console.log('Received mood from Websocket Service');
         oBservable.next(data);
       });
+      this.socket.on('online', (onlineData) => {
+        console.log('Data for the online user is: ' + onlineData);
+        oBservable.next(onlineData);
+      });
       return () => {
         this.socket.disconnect();
       };
@@ -23,9 +27,14 @@ export class WebsocketService {
 
     const observer = {
       next: (data: Object) => {
+        if (data['data'] === 'online') {
+          this.socket.emit('online', data);
+        }
         this.socket.emit('mood', data);
       },
     };
+
+    console.log('Successfuly Connected to the server.');
     return Rx.Subject.create(observer, observable);
 
   }

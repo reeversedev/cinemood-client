@@ -1,0 +1,19 @@
+.name {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 0px;
+}
+.big-name {
+  margin-top: 0px;
+}
+.container-fluid {
+  margin-top: -20px;
+  background-image: url('../../assets/profile-background.jpg');
+  height: 100%;
+}
+.uppername {
+  margin-left: 10px;
+}
+.gender {
+  text-transform: capitalize;
+}

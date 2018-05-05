@@ -30,8 +30,14 @@ import { TvInfoComponent } from './tv-info/tv-info.component';
 import { MoodsComponent } from './moods/moods.component';
 import { MasonryComponent } from './masonry/masonry.component';
 
-import { MatButtonModule, MatCheckboxModule, MatMenuModule, MatGridListModule, MatAutocompleteModule, MatNativeDateModule } from '@angular/material';
-import { MatIconModule, MatSidenavModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
+import {
+  MatButtonModule, MatCheckboxModule, MatMenuModule,
+  MatGridListModule, MatAutocompleteModule, MatNativeDateModule
+} from '@angular/material';
+import {
+  MatIconModule, MatSidenavModule, MatToolbarModule, MatCardModule,
+  MatFormFieldModule, MatSelectModule, MatInputModule
+} from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
