@@ -2,14 +2,27 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import { WebsocketService } from './websocket.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthService {
 
   authToken: any;
   user: any;
-  constructor(private http: Http) { }
+  connection: any;
+  constructor(private http: Http, private wsService: WebsocketService) {
+    this.connection = <Subject<any>>wsService.connect().map((response: any): any => {
+      return response;
+    });
+    this.getConnected();
+  }
 
+  getConnected() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
+    this.connection.next(this.authToken);
+  }
   registerUser(user) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');

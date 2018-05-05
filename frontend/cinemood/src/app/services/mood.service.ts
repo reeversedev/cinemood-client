@@ -10,7 +10,7 @@ export class MoodService {
   votes: Subject<any>;
 
   constructor(private wsService: WebsocketService, private http: Http) {
-    this.moods = <Subject<any>>wsService.connect().map((response: any): any => {
+    this.moods = <Subject<any>>wsService.mood().map((response: any): any => {
       return response;
     });
   }

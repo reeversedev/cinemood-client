@@ -40,8 +40,11 @@ var users = require('./routes/users');
 app.use(cors());
 
 io.on('connection', (socket) => {
-  console.log('User Connected');
+  console.log('Connection established');
 
+  socket.on('online', (onlinedata) => {
+    console.log('User is online', onlinedata);
+  })
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });

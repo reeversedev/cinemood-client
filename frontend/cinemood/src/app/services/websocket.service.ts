@@ -12,10 +12,6 @@ export class WebsocketService {
   connect(): Rx.Subject<MessageEvent> {
     this.socket = io('http://localhost:3000');
     const observable = new Observable(oBservable => {
-      this.socket.on('mood', (data) => {
-        console.log('Received mood from Websocket Service');
-        oBservable.next(data);
-      });
       this.socket.on('online', (onlineData) => {
         console.log('Data for the online user is: ' + onlineData);
         oBservable.next(onlineData);
@@ -27,16 +23,28 @@ export class WebsocketService {
 
     const observer = {
       next: (data: Object) => {
-        if (data['data'] === 'online') {
-          this.socket.emit('online', data);
-        }
+        this.socket.emit('online', data);
+      },
+    };
+    return Rx.Subject.create(observer, observable);
+
+  }
+  mood(): Rx.Subject<MessageEvent> {
+    const moodObservable = new Observable(MoodObservable => {
+      this.socket.on('mood', (data) => {
+        console.log('Received mood from Websocket Service');
+        MoodObservable.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    const moodObserver = {
+      next: (data: Object) => {
         this.socket.emit('mood', data);
       },
     };
-
-    console.log('Successfuly Connected to the server.');
-    return Rx.Subject.create(observer, observable);
-
+    return Rx.Subject.create(moodObserver, moodObservable);
   }
 
   vote(): Rx.Subject<MessageEvent> {

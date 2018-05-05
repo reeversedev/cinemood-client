@@ -17,6 +17,7 @@
 .backdrop-image {
   width: 100%;
   position: absolute;
+  filter: brightness(50%);
 }
 
 .poster-image {
