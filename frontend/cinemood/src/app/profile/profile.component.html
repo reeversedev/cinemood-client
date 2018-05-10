@@ -1,11 +1,13 @@
-<!-- <div *ngIf="user">
-  <img src="{{user.profilePicture}}" alt="">
-  <h3>Name: {{user.name}}</h3>
-  <h3>Email: {{user.email}}</h3>
-  <h3>Username: {{user.username}}</h3>
-</div> -->
 <div class="container-fluid">
   <div *ngIf="user">
+    <div id="mate-requests">
+      <h4>Mate Requests</h4>
+      <div *ngFor="let request of mateRequests">
+        <img class="circle" src="{{request.profilePicture}}" height="40" width="40">
+        <span>{{request.name}}</span>
+        <span></span>
+      </div>
+    </div>
     <div class="uppername">
         <p class="name">{{user.name}}</p>
         <span>@{{user.username}}</span>

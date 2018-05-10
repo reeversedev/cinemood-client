@@ -18,6 +18,7 @@ import { MoodService } from './services/mood.service';
 import { WebsocketService } from './services/websocket.service';
 import { NavigationService } from './services/navigation.service';
 import { ProfileService } from './services/profile.service';
+import { NotificationService } from './services/notification.service';
 
 import { Ng2CompleterModule } from 'ng2-completer';
 import { HomeComponent } from './home/home.component';
@@ -103,7 +104,7 @@ const appRoutes: Routes = [
     MomentModule,
     NgxAutoScrollModule
   ],
-  providers: [MoviedbService, AuthService, MoodService, WebsocketService, NavigationService, ProfileService],
+  providers: [MoviedbService, AuthService, MoodService, WebsocketService, NavigationService, ProfileService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

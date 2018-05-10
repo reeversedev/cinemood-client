@@ -19,9 +19,7 @@ export class AuthService {
   }
 
   getConnected() {
-    const token = localStorage.getItem('id_token');
-    this.authToken = token;
-    this.connection.next(this.authToken);
+    this.getProfile().subscribe(res => this.connection.next(res));
   }
   registerUser(user) {
     const headers = new Headers();
@@ -49,6 +47,11 @@ export class AuthService {
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
     return this.http.get('http://localhost:3000/auth/profile', { headers: headers }).map(res => res.json());
+  }
+  getMateRequests() {
+    const headers = new Headers;
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/auth/mate-requests', {headers: headers}).map(res => res.json);
   }
   loggedIn() {
     return tokenNotExpired('id_token');

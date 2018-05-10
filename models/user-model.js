@@ -12,7 +12,8 @@ const userSchema = mongoose.Schema({
     },
     profilePicture: String,
     dob: Date,
-    gender: String
+    gender: String,
+    friends: Array
 });
 
 const User = module.exports = mongoose.model('User', userSchema);

@@ -63,6 +63,11 @@
         <li>
           <button mat-button>TV Series</button>
         </li>
+        <!-- <li *ngIf="mate-request">
+          <button mat-raised-button color="primary" matBadgeColor="accent">
+            <span>Mate Requests</span> <span color="accent">8</span>
+          </button>
+        </li> -->
         <li>
           <button mat-button class="btn-primary" routerLink='/signin' *ngIf="!authService.loggedIn()">Login</button>
         </li>
@@ -70,11 +75,10 @@
           <a (click)="openSideNav()">
             <div class="row">
               <div class="col m6">
-                <img src="{{user?.profilePicture}}"
-                  alt="" class="circle profile">
+                <img src="{{user?.profilePicture}}" alt="" class="circle profile">
               </div>
               <div class="col m6">
-                {{user?.name}}
+                <b>{{user?.name}}</b>
               </div>
             </div>
           </a>

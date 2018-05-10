@@ -26,7 +26,6 @@ let Message = require('./models/message-model');
 
 mongoose.Promise = global.Promise;
 
-// mongoose.connect('mongodb://reeversedev:1234@ds119268.mlab.com:19268/mongochat').then(() => console.log('Connected to Database')).catch((err) => console.log(err));
 // connect to mongodb
 mongoose.connect(keys.mongodb.dbURI, () => {
   console.log('Connected to MongoDB.');
@@ -34,7 +33,7 @@ mongoose.connect(keys.mongodb.dbURI, () => {
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var notification = require('./routes/notification');
 
 
 app.use(cors());
@@ -44,6 +43,9 @@ io.on('connection', (socket) => {
 
   socket.on('online', (onlinedata) => {
     console.log('User is online', onlinedata);
+    client.hget('mate-request',onlinedata.user['username'], (err, data) => {
+      console.log(data);
+    })
   })
   socket.on('disconnect', () => {
     console.log('User disconnected');
@@ -121,7 +123,8 @@ io.on('connection', (socket) => {
 
   })
   socket.on('mate-request', (request) => {
-    client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
+    console.log('New request received', request);
+    client.hset('mate-request',request.receiver, request.sender, (err, reply) => {
       if(err) {
         console.log(err);
       }
@@ -162,6 +165,7 @@ app.use('/', index);
 app.use('/auth', authRoutes);
 app.use('/users', users);
 app.use('/profile', profile);
+app.use('/notification',notification);
 
 http.listen(3000, () => {
   console.log('Started on port 3000');

@@ -6,6 +6,8 @@ require('../config/passport-setup')(passport);
 const jwt = require('jsonwebtoken');
 const User = require('../models/user-model');
 const config = require('../config/keys');
+const redis = require('redis');
+const client = redis.createClient();
 
 router.post('/signup', (req, res) => {
     let newUser = new User({
@@ -79,9 +81,23 @@ router.post('/signin', function (req, res, next) {
 router.get('/profile', passport.authenticate('jwt', {
     session: false
 }), (req, res, next) => {
-    res.json({
-        user: req.user
+    let mate = client.hget('mate-request', req.user.username,(err, mateRequest) => {
+        res.json({
+            user: req.user,
+            mateRequest: mateRequest
+        });
     });
 });
+router.post('accept-request',  (req, res) => {
+    User.findByIdAndUpdate();
+})
+
+// router.get('/mate-requests', (req, res) => {
+//     console.log('User is:' + req.user);
+    
+//     // client.hget('mate-request', (err, requests) => {
+//     //     console.log(requests);
+//     // });
+// });
 
 module.exports = router;

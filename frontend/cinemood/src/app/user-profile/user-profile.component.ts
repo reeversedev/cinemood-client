@@ -50,17 +50,20 @@ export class UserProfileComponent implements OnInit {
   makeRequest() {
     const mateRequest = {};
     mateRequest['receiver'] = this.user['username'];
-    // this.authService.getProfile().subscribe(self => mateRequest['sender'] = self);
-    // this.request.next(mateRequest);
-    // this.authService.getProfile().subscribe(self => mateRequest['sender'] = self.user['username']);
-    this.authService.getProfile().subscribe(self => this.sendRequest(self.user['username'], mateRequest['receiver']));
+    this.authService.getProfile().subscribe(self => this.sendRequest(self.user, mateRequest['receiver']));
   }
   cancelRequest() {
     console.log('This method is used for cancelling the request');
   }
   sendRequest(sender, receiver) {
+    const sentBy = {};
+    sentBy['username'] = sender['username'];
+    sentBy['name'] = sender['name'];
+    sentBy['email'] = sender['email'];
+    sentBy['profilePicture'] = sender['profilePicture'];
+
     const actors = {};
-    actors['sender'] = sender;
+    actors['sender'] = JSON.stringify(sentBy);
     actors['receiver'] = receiver;
     actors['relation'] = 'upcoming-friends';
     this.request.next(actors);
