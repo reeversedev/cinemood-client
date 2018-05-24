@@ -57,6 +57,7 @@ export class UserProfileComponent implements OnInit {
   }
   sendRequest(sender, receiver) {
     const sentBy = {};
+    sentBy['id'] = sender['_id'];
     sentBy['username'] = sender['username'];
     sentBy['name'] = sender['name'];
     sentBy['email'] = sender['email'];

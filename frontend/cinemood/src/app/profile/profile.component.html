@@ -3,28 +3,33 @@
     <div id="mate-requests">
       <h4>Mate Requests</h4>
       <div *ngFor="let request of mateRequests">
-        <img class="circle" src="{{request.profilePicture}}" height="40" width="40">
-        <span>{{request.name}}</span>
-        <span></span>
+        <div *ngIf="request">
+          <img class="circle" src="{{request.profilePicture}}" height="40" width="40">
+          <span>{{request.name}}</span>
+          <span></span>
+          <div>
+            <a class="btn" color="primary" mat-button (click)="acceptRequest(this.request)">Accept</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="uppername">
-        <p class="name">{{user.name}}</p>
-        <span>@{{user.username}}</span>
+      <p class="name">{{user.name}}</p>
+      <span>@{{user.username}}</span>
     </div>
     <div class="row">
       <div class="col m3">
-          <img src="{{user.profilePicture}}" class="square" height=150>
+        <img src="{{user.profilePicture}}" class="square" height=150>
       </div>
       <div class="col m9">
         <div>
-            <h4 class="big-name">{{user.name}}</h4>
+          <h4 class="big-name">{{user.name}}</h4>
         </div>
         <div>
           <span class="gender">{{user.gender}}</span>
         </div>
         <div>
-            <p>{{user.email}}</p>
+          <p>{{user.email}}</p>
         </div>
       </div>
     </div>

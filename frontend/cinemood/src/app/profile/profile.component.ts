@@ -31,6 +31,11 @@ export class ProfileComponent implements OnInit {
       this.user = profile.user;
       console.log(this.user);
       this.notificationService.checkMateRequest(this.user['username']).subscribe(res => this.mateRequests.push(res));
+      // this.notificationService.checkMateRequest(this.user['username']).subscribe(res => console.log(res));
     });
   }
+  acceptRequest(request) {
+    this.notificationService.addMate(request, this.user).subscribe(res => console.log(res));
+  }
 }
+

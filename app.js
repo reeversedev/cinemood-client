@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
 
   socket.on('online', (onlinedata) => {
     console.log('User is online', onlinedata);
-    client.hget('mate-request',onlinedata.user['username'], (err, data) => {
+    client.hget('mate-request', onlinedata.user['username'], (err, data) => {
       console.log(data);
     })
   })
@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
     });
   });
   socket.on('new-message', (message) => {
-    console.log('from socket',message);
+    console.log('from socket', message);
     let newMessage = new Message({
       message: message.message,
       senderName: message.sender.user.name,
@@ -124,8 +124,8 @@ io.on('connection', (socket) => {
   })
   socket.on('mate-request', (request) => {
     console.log('New request received', request);
-    client.hset('mate-request',request.receiver, request.sender, (err, reply) => {
-      if(err) {
+    client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
+      if (err) {
         console.log(err);
       }
       io.emit('mate-request', {
@@ -165,7 +165,7 @@ app.use('/', index);
 app.use('/auth', authRoutes);
 app.use('/users', users);
 app.use('/profile', profile);
-app.use('/notification',notification);
+app.use('/notification', notification);
 
 http.listen(3000, () => {
   console.log('Started on port 3000');
