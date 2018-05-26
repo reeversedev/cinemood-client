@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { NotificationService } from '../services/notification.service';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
   mateRequests = [];
 
   constructor(
+    private websocketService: WebsocketService,
     private notificationService: NotificationService,
     private authService: AuthService,
     private router: Router) { }
@@ -32,6 +34,7 @@ export class ProfileComponent implements OnInit {
       console.log(this.user);
       this.notificationService.checkMateRequest(this.user['username']).subscribe(res => this.mateRequests.push(res));
       // this.notificationService.checkMateRequest(this.user['username']).subscribe(res => console.log(res));
+      this.websocketService.mateRequest().subscribe(res => this.mateRequests.push(JSON.parse(res['text'])));
     });
   }
   acceptRequest(request) {

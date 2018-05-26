@@ -129,12 +129,27 @@ io.on('connection', (socket) => {
         console.log(err);
       }
       io.emit('mate-request', {
-        type: 'mate-request-sent',
-        text: reply
+        type: 'mate-request-received',
+        text: request.sender
       });
     });
   });
+  socket.on('mate-request-accepted', (request) => {
+    console.log('New request received', request);
+    client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
+      if (err) {
+        console.log(err);
+      }
+      io.emit('notification', {
+        type: 'mate-request-accepted',
+        text: request.sender
+      });
+    });
+  });
+
 });
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
