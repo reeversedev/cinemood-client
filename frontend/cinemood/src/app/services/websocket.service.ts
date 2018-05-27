@@ -90,8 +90,8 @@ export class WebsocketService {
   mateRequest(): Rx.Subject<MessageEvent> {
     this.socket = io('http://localhost:3000');
     const requestObservable = new Observable(RequestObservable => {
-      this.socket.on('mate-request', (data) => {
-        console.log(data);
+      this.socket.on('mate-request-received', (data) => {
+        console.log('Here', data);
         RequestObservable.next(data);
       });
       return () => {
@@ -100,10 +100,29 @@ export class WebsocketService {
     });
     const RequestObserver = {
       next: (data: Object) => {
-        this.socket.emit('mate-request', data);
+        this.socket.emit('mate-request-sent', data);
       },
     };
 
     return Rx.Subject.create(RequestObserver, requestObservable);
+  }
+  activity(): Rx.Subject<MessageEvent> {
+    this.socket = io('http://localhost:3000');
+    const activityObservable = new Observable(ActivityObservable => {
+      this.socket.on('activity', (data) => {
+        console.log('Here', data);
+        ActivityObservable.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+    const ActivityObserver = {
+      next: (data) => {
+        this.socket.emit('activity', JSON.parse(data));
+      },
+    };
+
+    return Rx.Subject.create(ActivityObserver, activityObservable);
   }
 }

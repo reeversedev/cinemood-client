@@ -21,14 +21,6 @@ export class ProfileComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    // this.authService.getProfile().subscribe(profile => {
-    //   this.user = profile.user;
-    //   this.mateRequest = profile.mateRequest;
-    //   console.log(this.mateRequest);
-    // }, err => {
-    //   console.log(err);
-    //   return false;
-    // });
     this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
       console.log(this.user);

@@ -39,16 +39,27 @@ var notification = require('./routes/notification');
 app.use(cors());
 
 io.on('connection', (socket) => {
-  console.log('Connection established');
+  // console.log('Connection established');
 
   socket.on('online', (onlinedata) => {
-    console.log('User is online', onlinedata);
+    console.log('User is online', onlinedata.user._id);
     client.hget('mate-request', onlinedata.user['username'], (err, data) => {
       console.log(data);
     })
+  });
+  socket.on('activity', (activity) => {
+    const userid = activity.sender.id;
+    const key = 'activity_sRequest_' + userid;
+    client.rpush(key, activity.receiver, (err, reply) => {
+      if(err) {
+        console.log(err);
+      }
+      console.log('reply', reply);
+    })
+    console.log('activity', activity.sender);
   })
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    // console.log('User disconnected');
   });
 
   socket.on('mood', (moodMatter) => {
@@ -120,27 +131,26 @@ io.on('connection', (socket) => {
         });
       })
     })
-
   })
-  socket.on('mate-request', (request) => {
+  socket.on('mate-request-sent', (request) => {
     console.log('New request received', request);
     client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
       if (err) {
         console.log(err);
       }
-      io.emit('mate-request', {
+      io.emit('mate-request-received', {
         type: 'mate-request-received',
         text: request.sender
       });
     });
   });
   socket.on('mate-request-accepted', (request) => {
-    console.log('New request received', request);
+    console.log('Request Accepted', request);
     client.hset('mate-request', request.receiver, request.sender, (err, reply) => {
       if (err) {
         console.log(err);
       }
-      io.emit('notification', {
+      io.emit('mate-request-accepted', {
         type: 'mate-request-accepted',
         text: request.sender
       });

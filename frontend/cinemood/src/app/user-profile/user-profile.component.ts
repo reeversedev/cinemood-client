@@ -5,7 +5,7 @@ import { MatDrawer, MatSidenav } from '@angular/material';
 import { NavigationService } from '../services/navigation.service';
 import { AuthService } from '../services/auth.service';
 import { WebsocketService } from '../services/websocket.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   sender = {};
   request: Subject<any>;
   requestSent: Boolean = false;
+  activity: Subject<any>;
   constructor(
     private activatedRoute: ActivatedRoute,
     private profileService: ProfileService,
@@ -30,18 +31,17 @@ export class UserProfileComponent implements OnInit {
     this.request = <Subject<any>>wsService.mateRequest().map((response: any): any => {
       return response;
     });
+    this.activity = <Subject<any>>wsService.activity().map((res: any): any => {
+      return res;
+    });
   }
 
   ngOnInit() {
-    this.wsService.mateRequest().subscribe(data => {
-      if (data['text'] === 0 || data['text'] === 1) {
-        this.requestSent = true;
-      }
-    });
     this.activatedRoute.params.subscribe((params: Params) => {
       this.profileService.getUser(params.username).subscribe(result => this.user = result);
     });
     this.navigationService.setMessagenav(this.messagenav);
+    this.wsService.mateRequest().subscribe(res => console.log(res));
   }
 
   openMessage() {
@@ -51,6 +51,7 @@ export class UserProfileComponent implements OnInit {
     const mateRequest = {};
     mateRequest['receiver'] = this.user['username'];
     this.authService.getProfile().subscribe(self => this.sendRequest(self.user, mateRequest['receiver']));
+    this.requestSent = true;
   }
   cancelRequest() {
     console.log('This method is used for cancelling the request');
@@ -68,7 +69,6 @@ export class UserProfileComponent implements OnInit {
     actors['receiver'] = receiver;
     actors['relation'] = 'upcoming-friends';
     this.request.next(actors);
+    this.activity.next(JSON.stringify(actors));
   }
-
-
 }
